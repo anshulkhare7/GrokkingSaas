@@ -1,0 +1,101 @@
+@import 'variables'; //using import
+
+body {
+  background-color: $color-primary;
+}
+
+//Reusable code
+@mixin transform($property) {
+    -webkit-transform: rotate($property);
+    -ms-transform: rotate($property);
+    transform: rotate($property);
+}
+
+// function for calculations
+@function add-numbers($first-number, $second-number) {
+    @return $first-number + $second-number
+}
+
+.navbar {
+    background-color: orangered;
+    padding: 1rem;
+    ul {    // Nesting
+      list-style: none;
+    }
+    li {
+      text-align: center;
+      margin: 1rem;
+      @include transform(180deg); //resuable code 
+    }
+}  
+
+.box1 {
+    padding: add-numbers(5px, 10px); //functions
+    border: $my-border;
+}
+
+.button {
+    background-color: #0000FF; // Blue
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5rem;
+  }
+  
+.button-secondary {
+    @extend .button; //inheritance
+    background-color: #4CAF50; 
+    &:hover{    // Using & operator
+        background-color:white;
+    }
+    &-small{
+        font-size: 1rem;
+    }
+}  
+
+//Using control statement If-Else
+@mixin heading($size) {
+    @if $size == large {
+        font-size: 4rem;
+    }
+    @else if $size == medium {
+        font-size: 3rem;
+    }
+    @else if $size == small {
+        font-size: 2rem;
+    }
+    @else {
+        font-size: 1rem;
+    }
+}
+
+.h1 {
+    @include heading(large);
+}
+
+.h3 {
+    @include heading(medium);
+}
+
+.h6 {
+    @include heading(small);
+}  
+
+//Using for loop
+@for $i from 1 to 5 {
+    .list-#{$i} {
+        width: 2px * $i;
+    }
+}
+
+//Using while loop
+$i: 1;
+@while $i < 5 {
+  .modified-list-#{$i} {       
+     width: 2px * $i;   
+  }
+  $i: $i + 1;
+}
